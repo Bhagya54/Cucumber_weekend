@@ -1,33 +1,63 @@
 package stepDefinition;
 
+import java.time.Duration;
+
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class LoginStepDefinition {
 	
-	@Given("Navigated to gmail.com")
-	public void navigated_to_gmail_com() {
-	    System.out.println("gmail page is loaded");
+	WebDriver driver;
+	LoginPage login;
+	HomePage home;
+	
+	@Given("Open the browser")
+	public void open_the_browser() {
+		driver = new ChromeDriver(); 
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+	}
+	
+	@Given("Navigated to https:\\/\\/practicetestautomation.com\\/practice-test-login\\/")
+	public void navigated_to_https_practicetestautomation_com_practice_test_login() {
+	    driver.get("https://practicetestautomation.com/practice-test-login/");
 	}
 
-	@When("Entered valid username and password")
-	public void entered_valid_username_and_password() {
-	   System.out.println("Entered username");
-	   System.out.println("Entered password");
+	@When("^Entered valid (.*) and (.*)$")
+	public void entered_valid_username_and_password(String username,String password) {
+	   login=new LoginPage(driver);
+	   login.enterUsername(username);
+	   login.enterPassword(password);
+		//driver.findElement(By.id("username")).sendKeys(username);
+	  // driver.findElement(By.id("password")).sendKeys(password);
 	   
 	}
 
 	@When("Clicked on Login button")
 	public void clicked_on_login_button() {
-		 System.out.println("Clicked on login");
+		login.clickLogin();
+		//driver.findElement(By.id("submit")).click();
 	}
 
 	@Then("Home screen is displayed")
 	public void home_screen_is_displayed() {
-	   System.out.println("Home screen displayed");
+		home=new HomePage(driver);
+	   //WebElement heading = driver.findElement(By.xpath("//h1"));
+	   Assert.assertTrue(home.headingDisplayed());
+	   System.out.println("Home page is displayed");
+	}
+	
+	
+
+	@Then("Close the browser")
+	public void close_the_browser() {
+	    driver.close();
 	}
 }
