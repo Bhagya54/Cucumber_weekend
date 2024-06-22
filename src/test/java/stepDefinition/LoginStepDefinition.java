@@ -9,14 +9,16 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pageFactory.HomePage_PF;
+import pageFactory.LoginPage_PF;
 import pages.HomePage;
 import pages.LoginPage;
 
 public class LoginStepDefinition {
 	
 	WebDriver driver;
-	LoginPage login;
-	HomePage home;
+	LoginPage_PF login;
+	HomePage_PF home;
 	
 	@Given("Open the browser")
 	public void open_the_browser() {
@@ -32,7 +34,7 @@ public class LoginStepDefinition {
 
 	@When("^Entered valid (.*) and (.*)$")
 	public void entered_valid_username_and_password(String username,String password) {
-	   login=new LoginPage(driver);
+	   login=new LoginPage_PF(driver);
 	   login.enterUsername(username);
 	   login.enterPassword(password);
 		//driver.findElement(By.id("username")).sendKeys(username);
@@ -48,7 +50,7 @@ public class LoginStepDefinition {
 
 	@Then("Home screen is displayed")
 	public void home_screen_is_displayed() {
-		home=new HomePage(driver);
+		home=new HomePage_PF(driver);
 	   //WebElement heading = driver.findElement(By.xpath("//h1"));
 	   Assert.assertTrue(home.headingDisplayed());
 	   System.out.println("Home page is displayed");

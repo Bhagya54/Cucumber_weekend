@@ -6,9 +6,9 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources/featuresfiles", glue=
-{"stepDefinition"},tags = "@login")
-public class Runner {
+@CucumberOptions(features = "src/test/resources/backgroundDemo", glue=
+{"backgroundStepDef"},plugin = {"json:target/cucumber.json"})
+public class TestRunner {
 
 	
 	
